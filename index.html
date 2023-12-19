@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio de Nomes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Sorteio de Nomes</h2>
+
+    <form id="cadastroForm">
+        <label for="nome">Seu Nome:</label>
+        <input type="text" id="nome" required>
+        <button type="button" onclick="solicitarNome()">Solicitar Nome</button>
+    </form>
+
+    <div id="output"></div>
+
+    <script>
+        let nomes = ['Carlos', 'Amanda', 'Mirlene', 'Maritsa', 'Joanesio', 'Luciano', 'Yuri', 'Adilene', 'Julio'];
+        let solicitacoes = [];
+
+        function solicitarNome() {
+            const nomeInput = document.getElementById('nome');
+            const nomeSolicitante = nomeInput.value;
+
+            // Verificar se o nome está na lista
+            if (!nomes.includes(nomeSolicitante)) {
+                alert('Você não está cadastrado. Por favor, cadastre-se antes de solicitar um nome.');
+                return;
+            }
+
+            // Verificar se a pessoa já fez uma solicitação
+            if (solicitacoes.includes(nomeSolicitante)) {
+                alert('Você já fez uma solicitação. Não é permitido solicitar mais de um nome.');
+                return;
+            }
+
+            // Adicionar o nome à lista de solicitações
+            solicitacoes.push(nomeSolicitante);
+
+            // Remover o próprio nome da lista
+            const nomesDisponiveis = nomes.filter(nome => nome !== nomeSolicitante);
+
+            // Sortear um nome aleatório da lista
+            const nomeSorteado = sortearNome(nomesDisponiveis);
+
+            // Exibir o nome sorteado na tela
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `<p>${nomeSolicitante}, o nome sorteado é: <strong>${nomeSorteado}</strong></p>`;
+        }
+
+        function sortearNome(nomesDisponiveis) {
+            // Sortear um nome aleatório da lista
+            const indiceSorteado = Math.floor(Math.random() * nomesDisponiveis.length);
+            return nomesDisponiveis[indiceSorteado];
+        }
+    </script>
+
+</body>
+</html>
